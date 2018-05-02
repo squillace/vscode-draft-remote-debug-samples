@@ -34,7 +34,7 @@ events.on("push", (brigadeEvent, project) => {
     helm.storage.enabled = false
     helm.image = "lachlanevenson/k8s-helm:v2.8.2"
     helm.tasks = [
-        `helm upgrade --install --reuse-values golang-prod ./src/golang/charts/go-prod --set image.repository=${image} --set image.tag=${imageTag}`
+        `helm upgrade --install --reuse-values golang-prod ./src/golang/charts/go-prod --set image.repository=${image} --set image.tag=${imageTag} --namespace=default`
     ]
 
     var pipeline = new Group()
