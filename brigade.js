@@ -20,7 +20,7 @@ events.on("push", (brigadeEvent, project) => {
     docker.tasks = [
         "dockerd-entrypoint.sh &",
         "echo waiting && sleep 20",
-        `cd /src/golang/web`,
+        `cd /src/golang/`,
         `docker login -u ${dockerId} -p ${dockerPwd}`,
         `docker build -t ${image}:${imageTag} .`,
         `docker push ${image}:${imageTag}`,
