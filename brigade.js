@@ -3,7 +3,7 @@ const { events, Job, Group } = require('brigadier')
 events.on("push", (brigadeEvent, project) => {
     
     // variables
-    var dockerId = project.secrets.registryUsername
+    var dockerId = project.secrets.registryUrl
     var dockerPwd = project.secrets.registryPassword
     var gitPayload = JSON.parse(brigadeEvent.payload)
     var image = "squillace/golang"
