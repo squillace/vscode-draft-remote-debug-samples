@@ -6,7 +6,7 @@ image:
   pullPolicy: IfNotPresent
 service:
   name: golang
-  type: ClusterIP
+  type: LoadBalancer
   externalPort: 80
   internalPort: 8080
 resources:
