@@ -2,8 +2,7 @@ FROM radumatei/golang:dlv
 
 COPY . .
 
-#RUN dep init
-#RUN dep ensure
+RUN dep ensure
 
 RUN go-wrapper install
 
