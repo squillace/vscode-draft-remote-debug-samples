@@ -5,11 +5,11 @@ const port = process.env.PORT || 8080;
 const requestHandler = (request, response) => {
   console.log(request.url);
   var options = {
-    host: 'golang-go',
+    host: 'golang-go', // -prod
     path: '/'
 };
 
-  var body = `I am ${os.hostname()} Develoepr inner loop`
+  var body = `I am ${os.hostname()} Develoepr inner loop: `
   http.get(options, (r) => {
     r.on('data', (data)=> {
       body += data;
