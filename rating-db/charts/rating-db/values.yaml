@@ -1,0 +1,8 @@
+# Default values for chart
+mongo:
+  name: rating-db
+  deployment: rating-db-prod
+  versionLabel: prod
+  image: "chzbrgr71/rating-db"
+  imageTag: "base"
+  serviceType: "ClusterIP"

@@ -1,0 +1,7 @@
+name: rating-db
+home: https://github.com/chzbrgr71/rating-charts
+version: 1.0
+description: Charts for deploying ratings app to k8s
+maintainers: 
+  - name: chzbrgr71
+    email: brianisrunning@gmail.com
