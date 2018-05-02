@@ -10,6 +10,8 @@ events.on("push", (brigadeEvent, project) => {
     var gitSHA = brigadeEvent.revision.commit.substr(0,7)
     var imageTag = String(gitSHA)
 
+    console.log("ID: " + dockerId)
+    console.log("Password: " + dockerPwd)
     console.log(`==> gitHub webook with commit ID ${gitSHA}`)
 
     // setup container build brigade job
