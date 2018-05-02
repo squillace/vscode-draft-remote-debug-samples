@@ -1,0 +1,7 @@
+[[constraint]]
+  branch = "v2"
+  name = "gopkg.in/mgo.v2"
+
+[prune]
+  go-tests = true
+  unused-packages = true
