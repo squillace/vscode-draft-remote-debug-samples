@@ -34,7 +34,7 @@ spec:
 {{- range $index, $value := .Values.serviceCatalogEnv }}
 {{- range $key := $value.vars }}
           - name: {{ $value.name | upper }}_{{ . | upper }}
-            valuefrom:
+            valueFrom:
               secretKeyRef:
                 name: {{ $value.name }}
                 key: {{ . }}

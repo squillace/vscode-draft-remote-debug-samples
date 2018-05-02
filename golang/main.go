@@ -1,10 +1,13 @@
 package main
 
 import (
+	"crypto/tls"
 	"fmt"
 	"log"
+	"net"
 	"net/http"
 	"os"
+	"time"
 
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
@@ -28,11 +31,48 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 
-	fmt.Fprintf(w, "Aliases for %s: %v\n", result.Name, result.Aliases)
+	fmt.Fprintf(w, "%s:  %v\n", result.Name, result.Description)
+	//fmt.Fprintln(w, "Hi Kubecon EU!")
 }
 
 func main() {
-	session, err := mgo.Dial(os.Getenv("MONGO_CONNECTIONSTRING"))
+
+	// To use service mongo, we added a number of environment variables
+	// to your application, as listed below:
+	// MONGO_CONNECTIONSTRING
+	// MONGO_HOST
+	// MONGO_PASSWORD
+	// MONGO_PORT
+	// MONGO_USERNAME
+	//	mongoHost := "rating-db.default.svc.cluster.local"
+	//	mongoPassword := ""
+	//		mongoUser := ""
+	//		mongoPort := "271017"
+	mongoHost := os.Getenv("MONGO_HOST")
+	fmt.Printf("mongo host: %s", mongoHost)
+	mongoUsername := os.Getenv("MONGO_USERNAME")
+	mongoPassword := os.Getenv("MONGO_PASSWORD")
+	mongoPort := os.Getenv("MONGO_PORT")
+	dialInfo := &mgo.DialInfo{
+		Addrs: []string{
+			fmt.Sprintf(
+				"%s:%s",
+				mongoHost,
+				mongoPort,
+			),
+		},
+		Timeout:  60 * time.Second,
+		Database: "webratings",
+		Username: mongoUsername,
+		Password: mongoPassword,
+		DialServer: func(addr *mgo.ServerAddr) (net.Conn, error) {
+			return tls.Dial("tcp", addr.String(), &tls.Config{})
+		},
+	}
+	var err error
+	session, err = mgo.DialWithInfo(dialInfo)
+	//connectionString := os.Getenv("MONGO_CONNECTIONSTRING")
+	//session, err := mgo.Dial(connectionString)
 	if err != nil {
 		log.Fatalf("could not retrieve a connection to mongodb: %v", err)
 	}
