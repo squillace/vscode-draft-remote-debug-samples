@@ -1,0 +1,16 @@
+project: "<change this>"
+repository: "github.com/<change this>"
+cloneURL: "https://github.com/<change this>.git"
+# Used by GitHub to compute hooks.
+# MAKE SURE YOU CHANGE THIS. It's basically a password.
+sharedSecret: "<change this>"
+# Use this to have Brigade update your project about the build.
+# You probably want this if you want pull requests or commits to show
+# the build status.
+github:
+  token: "<change this>"
+secrets:
+  acrServer: <change this>.azurecr.io
+  acrUsername: <change this>
+  acrPassword: "<change this>"
+  slackWebhook: "<change this>"
