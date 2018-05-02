@@ -5,6 +5,7 @@ metadata:
   labels:
     draft: {{ default "draft-app" .Values.draft }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    app: debug-service
 spec:
   replicas: {{ .Values.replicaCount }}
   template:
@@ -28,3 +29,15 @@ spec:
         - containerPort: 2345
         resources:
 {{ toYaml .Values.resources | indent 12 }}
+{{- if .Values.serviceCatalogEnv }}
+        env:
+{{- range $index, $value := .Values.serviceCatalogEnv }}
+{{- range $key := $value.vars }}
+          - name: {{ $value.name | upper }}_{{ . | upper }}
+            valuefrom:
+              secretKeyRef:
+                name: {{ $value.name }}
+                key: {{ . }}
+{{- end }}
+{{- end }}
+{{- end }}
