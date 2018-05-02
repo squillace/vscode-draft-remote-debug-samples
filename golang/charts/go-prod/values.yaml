@@ -18,3 +18,5 @@ resources:
     memory: 128Mi
 ingress:
   enabled: false
+serviceCatalogEnv:
+    - {name: mongo, vars: [connectionString, host, password, port, username]}

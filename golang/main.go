@@ -24,6 +24,7 @@ type Hero struct {
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
+
 	c := session.DB("webratings").C("heroes")
 	result := Hero{}
 	if err := c.Find(bson.M{"name": "Wonder Woman"}).One(&result); err != nil {
@@ -32,22 +33,12 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	fmt.Fprintf(w, "%s:  %v\n", result.Name, result.Description)
+
 	//fmt.Fprintln(w, "Hi Kubecon EU!")
 }
 
 func main() {
 
-	// To use service mongo, we added a number of environment variables
-	// to your application, as listed below:
-	// MONGO_CONNECTIONSTRING
-	// MONGO_HOST
-	// MONGO_PASSWORD
-	// MONGO_PORT
-	// MONGO_USERNAME
-	//	mongoHost := "rating-db.default.svc.cluster.local"
-	//	mongoPassword := ""
-	//		mongoUser := ""
-	//		mongoPort := "271017"
 	mongoHost := os.Getenv("MONGO_HOST")
 	fmt.Printf("mongo host: %s", mongoHost)
 	mongoUsername := os.Getenv("MONGO_USERNAME")
@@ -71,8 +62,6 @@ func main() {
 	}
 	var err error
 	session, err = mgo.DialWithInfo(dialInfo)
-	//connectionString := os.Getenv("MONGO_CONNECTIONSTRING")
-	//session, err := mgo.Dial(connectionString)
 	if err != nil {
 		log.Fatalf("could not retrieve a connection to mongodb: %v", err)
 	}
