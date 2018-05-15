@@ -9,7 +9,7 @@ const requestHandler = (request, response) => {
     path: '/'
 };
 
-  var body = `I am ${os.hostname()} Develoepr inner loop: `
+  var body = `I am ${os.hostname()} Developer inner loop: `
   http.get(options, (r) => {
     r.on('data', (data)=> {
       body += data;
