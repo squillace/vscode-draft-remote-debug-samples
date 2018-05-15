@@ -24,7 +24,7 @@ type Hero struct {
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
-
+/*
 	c := session.DB("webratings").C("heroes")
 	result := Hero{}
 	if err := c.Find(bson.M{"name": "Wonder Woman"}).One(&result); err != nil {
@@ -33,12 +33,12 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	fmt.Fprintf(w, "%s:  %v\n", result.Name, result.Description)
-
-	//fmt.Fprintln(w, "Hi Kubecon EU.")
+*/
+	fmt.Fprintln(w, "Hi Kubecon EU.")
 }
 
 func main() {
-
+/*
 	mongoHost := os.Getenv("MONGO_HOST")
 	fmt.Printf("mongo host: %s", mongoHost)
 	mongoUsername := os.Getenv("MONGO_USERNAME")
@@ -66,6 +66,7 @@ func main() {
 		log.Fatalf("could not retrieve a connection to mongodb: %v", err)
 	}
 	defer session.Close()
+*/
 	http.HandleFunc("/", handler)
 	http.ListenAndServe(":8080", nil)
 }
