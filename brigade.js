@@ -78,7 +78,7 @@ events.on("push", (brigadeEvent, project) => {
     ]
 
     var pipeline = new Group()
-    pipeline.add(slackJob)
+    //pipeline.add(slackJob)
     pipeline.add(docker)
     //pipeline.add(slackJobTest1)
     //pipeline.add(slackJobTest2)
