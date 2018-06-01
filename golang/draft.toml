@@ -8,4 +8,4 @@
     auto-connect = false
     override-ports = ["8081:8080", "2345:2345"]
     dockerfile = "Dockerfile.debug"
-    chart = "go"
+    chart = "charts/go"
