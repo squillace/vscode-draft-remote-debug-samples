@@ -2,7 +2,7 @@ const { events, Job, Group } = require('brigadier')
 
 events.on("push", (brigadeEvent, project) => {
     
-    // variables
+    // variables from the Github push
     var dockerId = project.secrets.registryUrl
     var dockerPwd = project.secrets.registryPassword
     var gitPayload = JSON.parse(brigadeEvent.payload)
