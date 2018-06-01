@@ -14,6 +14,16 @@ events.on("push", (brigadeEvent, project) => {
     console.log("Password: " + dockerPwd)
     console.log(`==> gitHub webook with commit ID ${gitSHA}`)
 
+    // Let's notice the event
+    var slackJob = new Job("slack-notify", "technosophos/slack-notify:latest", ["/slack-notify"])
+    slackJob.storage.enabled = false
+    slackJob.env = {
+      SLACK_WEBHOOK: project.secrets.slackWebhook,
+      SLACK_USERNAME: "brigade-demo",
+      SLACK_MESSAGE: "KubeCon EU 2018 brigade pipeline finished",
+      SLACK_COLOR: "#0000ff"
+    }
+
     // setup container build brigade job
     var docker = new Job("job-runner-docker")
     docker.storage.enabled = false
@@ -38,6 +48,7 @@ events.on("push", (brigadeEvent, project) => {
     ]
 
     var pipeline = new Group()
+    pipeline.add(slackJob)
     pipeline.add(docker)
     pipeline.add(helm)
     
@@ -51,7 +62,7 @@ events.on("after", (event, project) => {
     slack.env = {
       SLACK_WEBHOOK: project.secrets.slackWebhook,
       SLACK_USERNAME: "brigade-demo",
-      SLACK_MESSAGE: "KubeCon EU 2018 brigade pipeline finished (Brian Redmond was here)",
+      SLACK_MESSAGE: "KubeCon EU 2018 brigade pipeline finished",
       SLACK_COLOR: "#0000ff"
     }
     
