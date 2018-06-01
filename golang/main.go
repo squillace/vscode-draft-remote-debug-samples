@@ -35,7 +35,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "%s:  %v\n", result.Name, result.Description)
 	*/
 
-	fmt.Fprintln(w, "Hi Kubecon EU.")
+	fmt.Fprintln(w, "Hi Brigade fans!")
 }
 
 func main() {
