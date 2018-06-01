@@ -1,0 +1,22 @@
+project: "<github org>/vscode-draft-remote-debug-samples"
+repository: "github.com/<github org>/vscode-draft-remote-debug-samples"
+cloneURL: "https://github.com/<github org>/vscode-draft-remote-debug-samples.git"
+
+# NOTE: IMPORTANT. If you're setting this up yourself, there's a  var image = "squillace/golang" line in the brigade.js file for this repository. that's because this application pushes its images to the docker hub repo of "squillace/golang". You need to have that value match the container registry that you use below. For example, if I wanted to use ACR, then my image value would be squillace.azurecr.io/golang, and then the pull will come from ACR with that image.
+
+# Used by GitHub to compute hooks.
+# MAKE SURE YOU CHANGE THIS. It's basically a password.
+sharedSecret: "ThreadBrigadeCICD" # choose your own here
+
+# Use this to have Brigade update your project about the build.
+# You probably want this if you want pull requests or commits to show
+# the build status.
+
+github:
+  token: "<your github token for auth>"
+
+secrets:
+  registryUrl: <docker hub org OR complete registry name like squillace.azurecr.io
+  registryUsername: <registry user name>
+  registryPassword: "<registry password"
+  slackWebhook: "<slack webhook for notifications"
