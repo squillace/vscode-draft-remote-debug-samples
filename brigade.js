@@ -50,7 +50,7 @@ events.on("push", (brigadeEvent, project) => {
     }
 
     // Let's notice the event and test someting after the build.
-    var slackJobTest2 = new Job("slack-notify", "technosophos/slack-notify:latest", ["/slack-notify"])
+    var slackJobTest2 = new Job("slack-notify-test2", "technosophos/slack-notify:latest", ["/slack-notify"])
     slackJobTest2.storage.enabled = false
     slackJobTest2.env = {
       SLACK_WEBHOOK: project.secrets.slackWebhook,
@@ -104,7 +104,7 @@ events.on("after", (event, project) => {
 
 events.on("error", (event, project) => {
     console.log(" **** ERROR EVENT called")
-    var slack = new Job("slack-notify", "technosophos/slack-notify:latest", ["/slack-notify"])
+    var slack = new Job("slack-notify-error", "technosophos/slack-notify:latest", ["/slack-notify"])
     slack.storage.enabled = false
     slack.env = {
       SLACK_WEBHOOK: project.secrets.slackWebhook,
