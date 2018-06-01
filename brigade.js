@@ -81,7 +81,7 @@ events.on("push", (brigadeEvent, project) => {
     //pipeline.add(slackJob)
     pipeline.add(docker)
     //pipeline.add(slackJobTest1)
-    //pipeline.add(slackJobTest2)
+    pipeline.add(slackJobTest2)
     pipeline.add(helm)
     
     pipeline.runEach()
@@ -100,3 +100,19 @@ events.on("after", (event, project) => {
     
     slack.run()
 })
+
+
+events.on("error", (event, project) => {
+    console.log(" **** ERROR EVENT called")
+    var slack = new Job("slack-notify", "technosophos/slack-notify:latest", ["/slack-notify"])
+    slack.storage.enabled = false
+    slack.env = {
+      SLACK_WEBHOOK: project.secrets.slackWebhook,
+      SLACK_USERNAME: "brigade-demo",
+      SLACK_MESSAGE: "An error occurred. ";
+      
+      SLACK_COLOR: "#0000ff"
+    }
+    
+    slack.run()
+  })
