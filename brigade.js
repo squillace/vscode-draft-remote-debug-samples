@@ -20,7 +20,7 @@ events.on("push", (brigadeEvent, project) => {
     slackJob.env = {
       SLACK_WEBHOOK: project.secrets.slackWebhook,
       SLACK_USERNAME: "brigade-demo",
-      SLACK_MESSAGE: "Detected a git push on ${image} with commit hash ${imageTag}",
+      SLACK_MESSAGE: "Detected a git push on " + image + " with commit hash " + imageTag,
       SLACK_COLOR: "#0000ff"
     }
 
@@ -39,13 +39,33 @@ events.on("push", (brigadeEvent, project) => {
         "killall dockerd"
     ]
 
-    // Let's notice the event
+    // Let's notice the event and test someting after the build.
     var slackJobTest1 = new Job("slack-notify", "technosophos/slack-notify:latest", ["/slack-notify"])
     slackJobTest1.storage.enabled = false
     slackJobTest1.env = {
       SLACK_WEBHOOK: project.secrets.slackWebhook,
       SLACK_USERNAME: "brigade-demo",
-      SLACK_MESSAGE: "Detected a git push on ${image} with commit hash ${imageTag}",
+      SLACK_MESSAGE: "Docker build successful; running image test 1 ...",
+      SLACK_COLOR: "#0000ff"
+    }
+
+    // Let's notice the event and test someting after the build.
+    var slackJobTest2 = new Job("slack-notify", "technosophos/slack-notify:latest", ["/slack-notify"])
+    slackJobTest2.storage.enabled = false
+    slackJobTest2.env = {
+      SLACK_WEBHOOK: project.secrets.slackWebhook,
+      SLACK_USERNAME: "brigade-demo",
+      SLACK_MESSAGE: "Running image test 2 ...",
+      SLACK_COLOR: "#0000ff"
+    }
+
+    // Let's notice the event and test someting after the build.
+    var slackJobTest3 = new Job("slack-notify", "technosophos/slack-notify:latest", ["/slack-notify"])
+    slackJobTest3.storage.enabled = false
+    slackJobTest3.env = {
+      SLACK_WEBHOOK: project.secrets.slackWebhook,
+      SLACK_USERNAME: "brigade-demo",
+      SLACK_MESSAGE: "Test completed successfully. Deploying to Production...",
       SLACK_COLOR: "#0000ff"
     }
 
@@ -60,6 +80,8 @@ events.on("push", (brigadeEvent, project) => {
     var pipeline = new Group()
     pipeline.add(slackJob)
     pipeline.add(docker)
+    pipeline.add(slackJobTest1)
+    pipeline.add(slackJobTest2)
     pipeline.add(helm)
     
     pipeline.runEach()
@@ -72,7 +94,7 @@ events.on("after", (event, project) => {
     slack.env = {
       SLACK_WEBHOOK: project.secrets.slackWebhook,
       SLACK_USERNAME: "brigade-demo",
-      SLACK_MESSAGE: "KubeCon EU 2018 brigade pipeline finished",
+      SLACK_MESSAGE: "Brigade pipeline finished",
       SLACK_COLOR: "#0000ff"
     }
     
