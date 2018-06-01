@@ -109,7 +109,7 @@ events.on("error", (event, project) => {
     slack.env = {
       SLACK_WEBHOOK: project.secrets.slackWebhook,
       SLACK_USERNAME: "brigade-demo",
-      SLACK_MESSAGE: "An error occurred. ";
+      SLACK_MESSAGE: "An error occurred. ",
       
       SLACK_COLOR: "#0000ff"
     }
