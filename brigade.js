@@ -20,7 +20,7 @@ events.on("push", (brigadeEvent, project) => {
     slackJob.env = {
       SLACK_WEBHOOK: project.secrets.slackWebhook,
       SLACK_USERNAME: "brigade-demo",
-      SLACK_MESSAGE: "KubeCon EU 2018 brigade pipeline finished",
+      SLACK_MESSAGE: "Detected a git push on ${image} with commit hash ${imageTag}",
       SLACK_COLOR: "#0000ff"
     }
 
@@ -38,6 +38,16 @@ events.on("push", (brigadeEvent, project) => {
         `docker push ${image}:${imageTag}`,
         "killall dockerd"
     ]
+
+    // Let's notice the event
+    var slackJobTest1 = new Job("slack-notify", "technosophos/slack-notify:latest", ["/slack-notify"])
+    slackJobTest1.storage.enabled = false
+    slackJobTest1.env = {
+      SLACK_WEBHOOK: project.secrets.slackWebhook,
+      SLACK_USERNAME: "brigade-demo",
+      SLACK_MESSAGE: "Detected a git push on ${image} with commit hash ${imageTag}",
+      SLACK_COLOR: "#0000ff"
+    }
 
     // brigade job. Helm chart
     var helm = new Job("job-runner-helm")
