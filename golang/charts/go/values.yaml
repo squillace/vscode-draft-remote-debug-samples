@@ -1,4 +1,4 @@
-replicaCount: 10
+replicaCount: 2
 image:
     pullPolicy: IfNotPresent
 service:
